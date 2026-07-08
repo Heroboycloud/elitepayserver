@@ -2,7 +2,7 @@
 // Combines elitepay.js commands with testbot.js API invoicing
 
 const TelegramBot  = require('node-telegram-bot-api');
-const Redis = require('ioredis');
+const {Redis} = require('@upstash/redis');
 const path = require('path');
 const fs = require('fs');
 const { configDotenv } = require('dotenv');
@@ -47,6 +47,7 @@ function log(message, level = 'INFO') {
 // ============================================
 // REDIS SETUP
 // ============================================
+/*
 const redis = new Redis(process.env.REDIS_URL || {
     host: process.env.REDIS_HOST || 'localhost',
     port: process.env.REDIS_PORT || 6379,
@@ -56,6 +57,15 @@ const redis = new Redis(process.env.REDIS_URL || {
 
 redis.on('connect', () => log('✅ Connected to Redis'));
 redis.on('error', (err) => log(`Redis error: ${err.message}`, 'ERROR'));
+*/
+
+let redis;
+let redisConnected = false;
+
+redis = new Redis({
+        url:process.env.REDIS_URL,
+        token:process.env.REDIS_PASSWORD})
+    console.log("Connected to upstash redis...")
 
 // ============================================
 // REDIS HELPERS
