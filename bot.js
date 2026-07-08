@@ -40,18 +40,9 @@ if (!CONFIG.TELEGRAM_TOKEN || !CONFIG.NOWPAYMENTS_API_KEY || !CONFIG.ADMIN_UNIQU
 // ============================================
 function log(message, level = 'INFO') {
     const timestamp = new Date().toISOString();
-    const logEntry = `[${timestamp}] [${level}] ${message}`;
-    console.log(logEntry);
-
-    const logDir = path.join(__dirname, 'logs');
-    if (!fs.existsSync(logDir)) {
-        fs.mkdirSync(logDir, { recursive: true });
-    }
-    fs.appendFileSync(
-        path.join(logDir, `bot-${new Date().toISOString().split('T')[0]}.log`),
-        logEntry + '\n'
-    );
+    console.log(`[${timestamp}] [${level}] ${message}`);
 }
+
 
 // ============================================
 // REDIS SETUP
